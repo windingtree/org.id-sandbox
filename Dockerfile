@@ -10,16 +10,14 @@ RUN tar -xvzf v1.9.13.tar.gz
 RUN cd go-ethereum-1.9.13 && make geth
 
 # Pull Geth into a second stage deploy alpine container
-FROM alpine:latest
+FROM node:10-alpine
 
-RUN apk add --no-cache ca-certificates
+# Set up blockchain
 COPY --from=builder /go-ethereum-1.9.13/build/bin/geth /usr/local/bin/
 
-WORKDIR /org.id-testnet
-COPY keystore keystore
-COPY genesis.json .
-COPY password .
-RUN geth init genesis.json --datadir .
+WORKDIR /
+
+COPY testnet-datadir .
 
 COPY start /usr/local/bin
 COPY orgid_testnet_console /usr/local/bin
