@@ -19,9 +19,9 @@ WORKDIR /
 
 COPY testnet-datadir .
 
-COPY start /usr/local/bin
-COPY orgid_testnet_console /usr/local/bin
+COPY scripts/start.sh /usr/local/bin
+COPY scripts/orgid_testnet_console.sh /usr/local/bin
 
 EXPOSE 8545 8546 8547 30303 30303/udp
 
-ENTRYPOINT [ "start" ]
+ENTRYPOINT [ "start.sh" ]
