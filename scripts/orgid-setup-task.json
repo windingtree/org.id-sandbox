@@ -1,0 +1,279 @@
+[
+    {
+        "command": "version"
+    },
+    {
+        "command": "deploy",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "from": "[FROM]",
+            "initMethod": "initialize",
+            "initArgs": [
+                "[FROM]",
+                "Lif Token (Private Testnet)",
+                "Lif",
+                "18",
+                "100000000000000000000000000"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER1]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER2]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER3]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER4]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER5]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER6]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER7]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER8]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER9]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER10]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER11]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER12]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER13]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER14]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER15]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER16]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER17]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER18]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "LifTestInitializable",
+            "address": "[TASK:1:contract.proxy]",
+            "from": "[FROM]",
+            "method": "transfer(address,uint256)",
+            "args": [
+                "[HOLDER19]",
+                "[LIFS]"
+            ]
+        }
+    },
+    {
+        "command": "deploy",
+        "parameters": {
+            "name": "OrgId",
+            "from": "[FROM]",
+            "initMethod": "initialize",
+            "initArgs": [
+                "[FROM]",
+                "[TASK:1:contract.proxy]"
+            ]
+        }
+    }
+]
