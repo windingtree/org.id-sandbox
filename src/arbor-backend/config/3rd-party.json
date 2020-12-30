@@ -1,0 +1,32 @@
+{
+    "currentEnvironment": "madrid",
+    "environments": {
+        "development": {
+            "orgidAddress": "ORG_ID_ADDRESS",
+            "infuraId": "",
+            "provider": "http://localhost:8545",
+            "active": true,
+            "network": "testnet",
+            "sendgridApiKey": "SENDGRID_API_KEY",
+            "baseUrl": "http://localhost:3333/",
+            "simard": "staging.api.simard.io",
+            "etherscanKey": "ETHERSCAN_KEY",
+            "defiPulseKey": "DEFI_PULSE_KEY",
+            "stripeSecret": "STRIPE_SECRET",
+            "stripeHookSecret": "STRIPE_HOOK_SECRET",
+            "stripeHookSecretTest": "STRIPE_HOOK_SECRET_TEST",
+            "wtWallet": "WT_WALLET",
+            "wtWalletKey": "WT_WALLET_KEY",
+            "fiatLimit": 80000,
+            "estimationGap": 20,
+            "corsAllowList": [
+                "http://localhost:3000"
+            ],
+            "limiterWindowMs": 300000,
+            "limiterMax": 180,
+            "directoryIndexAddress": "DIRECTORY_INDEX_ADDRESS"
+        }
+    },
+    "contracts": {
+    }
+}

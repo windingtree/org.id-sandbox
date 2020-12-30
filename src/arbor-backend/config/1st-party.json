@@ -1,0 +1,30 @@
+{
+    "app": {
+            "secret": "TESTBLABLABLA",
+            "tokenType": "Bearer",
+            "host": "localhost",
+            "port": 3333,
+            "link": "http://localhost:3333/api/v1",
+            "project": "Arbor"
+    },
+    "session": {
+            "key": "dev-session",
+            "secret": "BLABLABLATEST"
+    },
+    "db": {
+            "username": "user",
+            "password": "password",
+            "database": "arbor",
+            "host": "localhost",
+            "dialect": "mysql",
+            "dialectOptions": {
+            },
+            "pool": {
+                    "max": 5,
+                    "min": 0,
+                    "acquire": 30000,
+                    "idle": 10000
+            },
+            "logging": false
+    }
+}

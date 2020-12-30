@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
-
-set -o errexit
+set -e
 
 mkdir -p ./.openzeppelin
 rm -f ./.openzeppelin/private*.json # remove old deployment configs
-orgid-tools --network development \
-    cmd=task file=./scripts/orgid-setup-task.json \
+tools --network development \
+    cmd=task \
+    file=./orgid-git/setup/setup-task.json \
     params=FROM:0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0 \
     params=LIFS:10000000000000000000000 \
     params=HOLDER1:0x5aafeD2ea1ca9EA4d80664b3260126058B46Da20 \
@@ -26,4 +26,4 @@ orgid-tools --network development \
     params=HOLDER16:0x9EFF1F1c235B20037EA8318a4b14Bf1d5F1F92d0 \
     params=HOLDER17:0xa6e96AC2C446F89699479FBb1bf0DE93719E2105 \
     params=HOLDER18:0x57416D88bf105A955e39b615a693A42F77b3e570 \
-    params=HOLDER19:0x0CfF2c6E3D5e5a8A977089D5C0f5AC71Ca6dF67B 
+    params=HOLDER19:0x0CfF2c6E3D5e5a8A977089D5C0f5AC71Ca6dF67B

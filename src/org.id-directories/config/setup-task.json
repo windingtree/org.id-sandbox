@@ -1,8 +1,5 @@
 [
     {
-        "command": "version"
-    },
-    {
         "command": "deploy",
         "parameters": {
             "name": "LifTestInitializable",
@@ -261,18 +258,6 @@
             "args": [
                 "[HOLDER19]",
                 "[LIFS]"
-            ]
-        }
-    },
-    {
-        "command": "deploy",
-        "parameters": {
-            "name": "OrgId",
-            "from": "[FROM]",
-            "initMethod": "initialize",
-            "initArgs": [
-                "[FROM]",
-                "[TASK:1:contract.proxy]"
             ]
         }
     }

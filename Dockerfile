@@ -1,66 +1,83 @@
+ARG DATADIR=/org.id-testnet-data
+
+# STAGE 1
 # Build Geth in a stock Go builder container
-FROM golang:1.14-alpine as builder
+FROM golang:alpine as builder
 
 RUN apk add --no-cache make gcc musl-dev linux-headers git
+RUN git clone https://github.com/ethereum/go-ethereum /go-ethereum
+RUN cd /go-ethereum && make all
 
-WORKDIR /
+# STAGE 2
+# Build a testnet
+FROM alpine:latest as testnet
+ARG DATADIR
 
-RUN wget https://github.com/ethereum/go-ethereum/archive/v1.9.13.tar.gz
-RUN tar -xvzf v1.9.13.tar.gz
-RUN cd go-ethereum-1.9.13 && make geth
-RUN mkdir -p org.id-testnet
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /go-ethereum/build/bin/* /usr/local/bin/
 
 # Create geth datadir with config
-COPY ./src/keystore /org.id-testnet/keystore
-COPY ./src/password /org.id-testnet/password
-COPY ./src/genesis.json /org.id-testnet/genesis.json
+COPY ./src/geth/config/ $DATADIR/
+COPY ./src/geth/scripts/init.sh $DATADIR/init.sh
+COPY ./src/geth/scripts/start.sh $DATADIR/start.sh
+
+RUN chmod +x $DATADIR/init.sh
+RUN chmod +x $DATADIR/start.sh
 
 # Initialize testnet
-RUN /go-ethereum-1.9.13/build/bin/geth \
-        --datadir /org.id-testnet \
-        init /org.id-testnet/genesis.json
+RUN $DATADIR/init.sh
 
-# Pull Geth into a second stage deploy alpine container
-FROM node:10-alpine as setup
+# STAGE 3
+# Populate test-network with data
+FROM node:12-alpine as setup
+ARG DATADIR
 
-WORKDIR /
-
-# Set up blockchain
-COPY --from=builder /go-ethereum-1.9.13/build/bin/geth /usr/local/bin/
-COPY --from=builder /org.id-testnet/ /org.id-testnet/
+# Pull artifacts from previous stages
+COPY --from=builder /go-ethereum/build/bin/ /usr/local/bin/
+COPY --from=testnet $DATADIR/ $DATADIR/
 
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python git
-RUN mkdir -p orgid
 
-WORKDIR /orgid
+# Setup org.id repository with dependencies
+RUN git clone https://github.com/windingtree/org.id.git /org.id
+RUN cd /org.id && npm i
+RUN mkdir -p /org.id/setup
+COPY ./src/org.id/scripts/setup.sh /org.id/setup/setup.sh
+COPY ./src/org.id/config/setup-task.json /org.id/setup/setup-task.json
+COPY ./src/org.id/config/truffle.js /org.id/truffle.js
+RUN chmod +x /org.id/setup/setup.sh
 
-# Setup org.id repository with dependencies 
-RUN git clone https://github.com/windingtree/org.id.git .
-RUN cat package.json
-RUN npm ci
-RUN npm link
+# # Setup org.id-directories repository
+# RUN mkdir -p /org.id-directories
+# RUN git clone git@github.com:windingtree/org.id-directories.git /org.id-directories
+# RUN cd /org.id-directories && npm ci
 
-# Copy org.id setup script
-RUN mkdir -p scripts
-COPY ./scripts/setup.sh scripts/setup.sh
+# # Setup payment manager repository
+# RUN mkdir -p /payment-manager
+# RUN git clone git@github.com:windingtree/payment-manager.git /payment-manager
+# RUN cd /payment-manager && npm ci
 
-# Copy startup script
-COPY ./scripts/orgid-setup-task.json scripts/orgid-setup-task.json
-COPY ./scripts/start.sh /usr/local/bin
-COPY ./src/truffle.js truffle.js
+# # Setup arbor-backend repository
+# RUN mkdir -p /arbor-backend
+# RUN git clone git@github.com:windingtree/arbor-backend.git /arbor-backend
+# RUN cd /arbor-backend && npm ci
 
 # Start geth node and deployment
-RUN (/usr/local/bin/start.sh &) && sleep 20 && /orgid/scripts/setup.sh && sleep 10 && killall -HUP geth
+RUN ($DATADIR/start.sh &) && sleep 20 && /org.id/setup/setup.sh && sleep 10 && killall -HUP geth
 
 # Cleanup
 RUN apk del .build-deps
 
-# Final stage
-FROM node:10-alpine
+# STAGE 4
+# Building of a final container
+FROM node:12-alpine
+ARG DATADIR
+ENV DATADIR=$DATADIR
 
 COPY --from=setup /usr/local/bin/ /usr/local/bin/
-COPY --from=setup /org.id-testnet/ /org.id-testnet/
-COPY --from=setup /orgid/ /orgid/
+COPY --from=setup $DATADIR/ $DATADIR/
+COPY --from=setup /org.id/ /org.id/
+RUN ln -s $DATADIR/start.sh /usr/local/bin/start.sh
 
 EXPOSE 8545 8546 8547 30303 30303/udp
 

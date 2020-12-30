@@ -1,6 +1,6 @@
 {
     "config": {
-        "chainId": 17889,
+        "chainId": 15,
         "homesteadBlock":0,
         "eip150Block":0,
         "eip150Hash": "0xbf7e331f7f7c1dd2e05159666b3bf8bc7a8a3a9eb1d518969eab529dd9b88c1a",
@@ -10,14 +10,14 @@
         "byzantiumBlock":0,
         "constantinopleBlock":0,
         "petersburgBlock":0,
-        "istanbulBlock":0,
+        "istanbulBlock":1561651,
         "clique": {
-            "period":5,
+            "period":0,
             "epoch":30000
         }
     },
     "coinbase":"0x0000000000000000000000000000000000000000",
-    "difficulty": "1",
+    "difficulty": "0x1",
     "nonce":"0x0",
     "number":"0x0",
     "timestamp": "0x0",

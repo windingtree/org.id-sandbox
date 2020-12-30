@@ -1,0 +1,11 @@
+[
+    {
+        "command": "deploy",
+        "parameters": {
+            "name": "OrgId",
+            "from": "[FROM]",
+            "initMethod": "initialize",
+            "initArgs": []
+        }
+    }
+]
