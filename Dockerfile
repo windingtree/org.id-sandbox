@@ -36,21 +36,28 @@ ARG DATADIR
 COPY --from=builder /go-ethereum/build/bin/ /usr/local/bin/
 COPY --from=testnet $DATADIR/ $DATADIR/
 
-RUN apk add --no-cache --virtual .build-deps alpine-sdk python git
+RUN apk add --no-cache --virtual .build-deps alpine-sdk python git jq
 
 # Setup org.id repository with dependencies
 RUN git clone https://github.com/windingtree/org.id.git /org.id
-RUN cd /org.id && npm i
+WORKDIR /org.id
+RUN npm i
 RUN mkdir -p /org.id/setup
 COPY ./src/org.id/scripts/setup.sh /org.id/setup/setup.sh
 COPY ./src/org.id/config/setup-task.json /org.id/setup/setup-task.json
 COPY ./src/org.id/config/truffle.js /org.id/truffle.js
 RUN chmod +x /org.id/setup/setup.sh
 
-# # Setup org.id-directories repository
-# RUN mkdir -p /org.id-directories
-# RUN git clone git@github.com:windingtree/org.id-directories.git /org.id-directories
-# RUN cd /org.id-directories && npm ci
+# Setup org.id-directories repository
+RUN git clone https://github.com/windingtree/org.id-directories.git /org.id-directories
+WORKDIR /org.id-directories
+RUN npm i
+RUN mkdir -p /org.id-directories/setup
+COPY ./src/org.id-directories/scripts/  /org.id-directories/setup/
+COPY ./src/org.id-directories/config/setup-task.json /org.id-directories/setup/setup-task.json
+COPY ./src/org.id-directories/config/setup-directories-task.json /org.id-directories/setup/setup-directories-task.json
+COPY ./src/org.id-directories/config/truffle.js /org.id-directories/truffle.js
+RUN chmod +x /org.id-directories/setup/setup.sh
 
 # # Setup payment manager repository
 # RUN mkdir -p /payment-manager
@@ -63,7 +70,7 @@ RUN chmod +x /org.id/setup/setup.sh
 # RUN cd /arbor-backend && npm ci
 
 # Start geth node and deployment
-RUN ($DATADIR/start.sh &) && sleep 20 && /org.id/setup/setup.sh && sleep 10 && killall -HUP geth
+RUN ($DATADIR/start.sh &) && sleep 20 && /org.id/setup/setup.sh && /org.id-directories/setup/setup.sh && sleep 10 && killall -HUP geth
 
 # Cleanup
 RUN apk del .build-deps
@@ -77,6 +84,7 @@ ENV DATADIR=$DATADIR
 COPY --from=setup /usr/local/bin/ /usr/local/bin/
 COPY --from=setup $DATADIR/ $DATADIR/
 COPY --from=setup /org.id/ /org.id/
+COPY --from=setup /org.id-directories/ /org.id-directories/
 RUN ln -s $DATADIR/start.sh /usr/local/bin/start.sh
 
 EXPOSE 8545 8546 8547 30303 30303/udp

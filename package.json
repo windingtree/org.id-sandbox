@@ -1,0 +1,26 @@
+{
+  "name": "@windingtree/org.id-sandbox",
+  "version": "1.0.0",
+  "description": "Containerized ORGiD tests infrastructure",
+  "main": "run.sh",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "docker run --rm -i hadolint/hadolint < ./Dockerfile",
+    "build": "./build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windingtree/org.id-sandbox.git"
+  },
+  "keywords": [
+    "org.id",
+    "orgid",
+    "docker"
+  ],
+  "author": "Winding Tree Developers <dev@windingtree.com>",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/windingtree/org.id-sandbox/issues"
+  },
+  "homepage": "https://github.com/windingtree/org.id-sandbox#readme"
+}

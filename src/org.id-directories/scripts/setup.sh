@@ -1,13 +1,26 @@
 #!/usr/bin/env sh
 set -e
 
-mkdir -p ./.openzeppelin
-rm -f ./.openzeppelin/private*.json # remove old deployment configs
-tools --network development \
+# Working dir
+cd /org.id-directories
+rm -f /org.id-directories/.openzeppelin/private*.json # remove old deployment configs
+
+# Build contracts
+npx truffle compile
+
+# Deploy Lif token
+npx truffle --network development \
+    exec ./setup/lif.js \
+    from=0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0
+LIF_ADDRESS="$(jq -r '.address' '/org.id-directories/lif.json')"
+
+# Distribute Lif tokens
+npx tools --network development \
     cmd=task \
-    file=./orgid-git/setup/setup-task.json \
+    file=/org.id-directories/setup/setup-task.json \
+    params=LIF_ADDRESS:$LIF_ADDRESS \
     params=FROM:0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0 \
-    params=LIFS:10000000000000000000000 \
+    params=LIFS:1000000000000000000000000 \
     params=HOLDER1:0x5aafeD2ea1ca9EA4d80664b3260126058B46Da20 \
     params=HOLDER2:0xc5e2c01C8FdB4B090aaB30c81BeaB0BC230D0F82 \
     params=HOLDER3:0x5a4D34eCD771DA77996a600F1Cd9Ec720ece643e \
@@ -27,3 +40,19 @@ tools --network development \
     params=HOLDER17:0xa6e96AC2C446F89699479FBb1bf0DE93719E2105 \
     params=HOLDER18:0x57416D88bf105A955e39b615a693A42F77b3e570 \
     params=HOLDER19:0x0CfF2c6E3D5e5a8A977089D5C0f5AC71Ca6dF67B
+
+# Deploy Arbitrator
+npx truffle --network development \
+    exec ./setup/arbitrator.js \
+    governor=0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0
+ARBITRATOR_ADDRESS="$(jq -r '.address' '/org.id-directories/arbitrator.json')"
+ORGID_ADDRESS="$(jq -r '.contract.proxy' '/org.id/.openzeppelin/private-OrgId.json')"
+
+# Deploy Directory Index
+npx tools --network development \
+    cmd=task \
+    file=/org.id-directories/setup/setup-directories-task.json \
+    params=ORGID_ADDRESS:$ORGID_ADDRESS \
+    params=FROM:0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0 \
+    params=LIF_ADDRESS:$LIF_ADDRESS \
+    params=ARBITRATOR_ADDRESS:$ARBITRATOR_ADDRESS

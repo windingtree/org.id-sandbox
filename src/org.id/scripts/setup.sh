@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 set -e
 
-rm -f /org.id/.openzeppelin/private*.json # remove old deployment configs
+# Working dir
 cd /org.id
+rm -f /org.id/.openzeppelin/private*.json # remove old deployment configs
+
+# Deploy ORGiD
 npx tools --network development \
     cmd=task \
     file=/org.id/setup/setup-task.json \
