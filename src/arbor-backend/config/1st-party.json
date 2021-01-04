@@ -12,8 +12,8 @@
             "secret": "BLABLABLATEST"
     },
     "db": {
-            "username": "user",
-            "password": "password",
+            "username": "arbor",
+            "password": "111111",
             "database": "arbor",
             "host": "localhost",
             "dialect": "mysql",

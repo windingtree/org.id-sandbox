@@ -2,7 +2,7 @@
     "currentEnvironment": "madrid",
     "environments": {
         "development": {
-            "orgidAddress": "ORG_ID_ADDRESS",
+            "orgidAddress": "ORGID_ADDRESS",
             "infuraId": "",
             "provider": "http://localhost:8545",
             "active": true,
@@ -15,8 +15,8 @@
             "stripeSecret": "STRIPE_SECRET",
             "stripeHookSecret": "STRIPE_HOOK_SECRET",
             "stripeHookSecretTest": "STRIPE_HOOK_SECRET_TEST",
-            "wtWallet": "WT_WALLET",
-            "wtWalletKey": "WT_WALLET_KEY",
+            "wtWallet": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "wtWalletKey": "f17fd1ca0cce536c194c9842f68f9b4088c48a4f09431fe4f2101a899b415dd0",
             "fiatLimit": 80000,
             "estimationGap": 20,
             "corsAllowList": [
