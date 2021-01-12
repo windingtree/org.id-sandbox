@@ -99,7 +99,7 @@ RUN /var/lib/mysql/setup.sh && \
     sleep 10 && \
     killall -HUP mysqld
 
-# @todo Deploy organizations
+# Deploy organizations
 COPY ./src/org.id/data/ /org.id/setup/data/
 COPY ./src/org.id/config/setup-legal-task.json /org.id/setup/setup-legal-task.json
 COPY ./src/org.id/config/setup-units-task.json /org.id/setup/setup-units-task.json
