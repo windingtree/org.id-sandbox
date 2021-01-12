@@ -40,7 +40,7 @@ ARG STRIPE_HOOK_SECRET_TEST
 COPY --from=builder /go-ethereum/build/bin/ /usr/local/bin/
 COPY --from=testnet $DATADIR/ $DATADIR/
 
-RUN apk add --no-cache --virtual .build-deps alpine-sdk python git jq supervisor
+RUN apk add --no-cache --virtual .build-deps alpine-sdk python git jq
 
 # Setup org.id repository with dependencies
 RUN git clone https://github.com/windingtree/org.id.git /org.id
@@ -77,9 +77,9 @@ RUN ($DATADIR/start.sh &) && \
     killall -HUP geth
 
 # Setup arbor-backend repository
-RUN git clone https://github.com/windingtree/arbor-backend.git /arbor-backend
+RUN echo "arbor-backend v1.1.3" && git clone https://github.com/windingtree/arbor-backend.git /arbor-backend
 WORKDIR /arbor-backend
-RUN npm i
+RUN rm -rf package-lock.json && npm i
 COPY ./src/arbor-backend/config/1st-party.json /arbor-backend/modules/config/lib/1st-party.json
 COPY ./src/arbor-backend/config/3rd-party.json /arbor-backend/modules/config/lib/3rd-party.json
 COPY ./src/arbor-backend/config/config_aggregator.json /arbor-backend/modules/config/lib/config_aggregator.json
@@ -99,7 +99,19 @@ RUN /var/lib/mysql/setup.sh && \
     sleep 10 && \
     killall -HUP mysqld
 
-# @todo Start the Arbor and deploy organizations
+# @todo Deploy organizations
+COPY ./src/org.id/data/ /org.id/setup/data/
+COPY ./src/org.id/config/setup-legal-task.json /org.id/setup/setup-legal-task.json
+COPY ./src/org.id/config/setup-units-task.json /org.id/setup/setup-units-task.json
+COPY ./src/org.id/scripts/serve-data.sh /org.id/setup/serve-data.sh
+COPY ./src/org.id/scripts/setup-organizations.sh /org.id/setup/setup-organizations.sh
+RUN chmod +x /org.id/setup/serve-data.sh
+RUN chmod +x /org.id/setup/setup-organizations.sh
+
+RUN /org.id/setup/setup-organizations.sh && \
+    sleep 10 && \
+    killall -HUP mysqld && \
+    killall -HUP node
 
 # Cleanup
 RUN apk del .build-deps && rm -f /var/cache/apk/*
@@ -110,16 +122,22 @@ FROM node:10-alpine
 ARG DATADIR
 ENV DATADIR=$DATADIR
 
+RUN apk add --update --no-cache mysql mysql-client supervisor nano
 COPY --from=setup /usr/local/bin/ /usr/local/bin/
 COPY --from=setup $DATADIR/ $DATADIR/
 # @todo Copy deployment configs only instead of whole projects folders
 COPY --from=setup /org.id/ /org.id/
 COPY --from=setup /org.id-directories/ /org.id-directories/
+COPY --from=setup /var/lib/mysql/ /var/lib/mysql/
+COPY --from=setup /run/mysqld/ /run/mysqld/
+COPY --from=setup /etc/mysql/my.cnf /etc/mysql/my.cnf
+COPY --from=setup /arbor-backend/ /arbor-backend/
 COPY ./src/supervisor/config/supervisord.conf /etc/supervisord.conf
+RUN sed -i "s/DATADIR/$(printf '%s\n' "$DATADIR" | sed -e 's/[]\/$*.^[]/\\&/g')/g" /etc/supervisord.conf
 
-EXPOSE 8545 8546 8547 30303 30303/udp 3306
+EXPOSE 8545 8546 8547 30303 30303/udp 3306 3333 4444 9001
 
 VOLUME $DATADIR
 VOLUME /var/lib/mysql
 
-ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
+ENTRYPOINT [ "supervisord", "--configuration", "/etc/supervisord.conf" ]

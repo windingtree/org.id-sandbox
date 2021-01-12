@@ -1,0 +1,46 @@
+[
+    {
+        "command": "makehash",
+        "parameters": {
+            "file": "./setup/data/simard.json"
+        }
+    },
+    {
+        "command": "makehash",
+        "parameters": {
+            "file": "./setup/data/winding-tree.json"
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "OrgId",
+            "address": "[ORGID_ADDRESS]",
+            "from": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "method": "createOrganization(bytes32,bytes32,string,string,string)",
+            "args": [
+                "0x4542a08dd5bfb7388296ed49232c22bab92963af699c43007f1b53d9073e905c",
+                "[TASK:0:hash]",
+                "http://localhost:4444/simard.json",
+                "",
+                ""
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "OrgId",
+            "address": "[ORGID_ADDRESS]",
+            "from": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "method": "createOrganization(bytes32,bytes32,string,string,string)",
+            "args": [
+                "0x3a1b7f6e0b40a89c3b113b64ae16bf28c303f3a18f1bd0136eb54d7212965719",
+                "[TASK:1:hash]",
+                "http://localhost:4444/winding-tree.json",
+                "",
+                ""
+            ]
+        }
+    }
+]

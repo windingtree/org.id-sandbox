@@ -1,10 +1,11 @@
 {
-    "currentEnvironment": "madrid",
+    "currentEnvironment": "development",
     "environments": {
         "development": {
             "orgidAddress": "ORGID_ADDRESS",
             "infuraId": "",
             "provider": "http://localhost:8545",
+            "wsProvider": "ws://localhost:8546",
             "active": true,
             "network": "testnet",
             "sendgridApiKey": "SENDGRID_API_KEY",

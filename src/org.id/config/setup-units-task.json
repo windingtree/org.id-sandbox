@@ -1,0 +1,74 @@
+[
+    {
+        "command": "makehash",
+        "parameters": {
+            "file": "./setup/data/glider-aggregator.json"
+        }
+    },
+    {
+        "command": "makehash",
+        "parameters": {
+            "file": "./setup/data/glider-travel.json"
+        }
+    },
+    {
+        "command": "makehash",
+        "parameters": {
+            "file": "./setup/data/simard-pay.json"
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "OrgId",
+            "address": "[ORGID_ADDRESS]",
+            "from": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "method": "createUnit(bytes32,bytes32,address,bytes32,string,string,string)",
+            "args": [
+                "0x12e3835ba7df494f43cc717c6ba79aa35d63064da564bd7a340d2e6a5b099bcc",
+                "0xe49b9c395ae18690ba1d7b0bef07a7559e82c8af947d0d7674cc4e519867f427",
+                "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+                "[TASK:0:hash]",
+                "http://localhost:4444/glider-aggregator.json",
+                "",
+                ""
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "OrgId",
+            "address": "[ORGID_ADDRESS]",
+            "from": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "method": "createUnit(bytes32,bytes32,address,bytes32,string,string,string)",
+            "args": [
+                "0x69d0810946ca07a5ebd7cbf7d68e375f4803b03e1f026abdeee275a0fc7a314f",
+                "0xe49b9c395ae18690ba1d7b0bef07a7559e82c8af947d0d7674cc4e519867f427",
+                "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+                "[TASK:1:hash]",
+                "http://localhost:4444/glider-travel.json",
+                "",
+                ""
+            ]
+        }
+    },
+    {
+        "command": "tx",
+        "parameters": {
+            "name": "OrgId",
+            "address": "[ORGID_ADDRESS]",
+            "from": "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+            "method": "createUnit(bytes32,bytes32,address,bytes32,string,string,string)",
+            "args": [
+                "0x3090b55711a4d453f541c4ca49b88b197d9da4bcbb38cc7b08895e67798e663e",
+                "0xe49b9c395ae18690ba1d7b0bef07a7559e82c8af947d0d7674cc4e519867f427",
+                "0x28D9F2192F8CeC7724c6C71e3048D03372F8d5D0",
+                "[TASK:2:hash]",
+                "http://localhost:4444/simard-pay.json",
+                "",
+                ""
+            ]
+        }
+    }
+]

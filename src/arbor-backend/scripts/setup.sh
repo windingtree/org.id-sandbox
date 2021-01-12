@@ -57,7 +57,8 @@ EOF
 		# set new User and Password
 		if [ "$MYSQL_USER" != "" ] && [ "$MYSQL_USER_PWD" != "" ]; then
 		    echo "[i] Creating user: $MYSQL_USER with password $MYSQL_USER_PWD"
-		    echo "GRANT ALL ON \`$MYSQL_USER_DB\`.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';" >> $tfile
+		    echo "GRANT ALL ON \`$MYSQL_USER_DB\`.* to '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_USER_PWD';" >> $tfile
+			echo "GRANT ALL ON \`$MYSQL_USER_DB\`.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';" >> $tfile
 		fi
 	else
 		# don`t need to create new database,Set new User to control all database.
@@ -84,4 +85,4 @@ sleep 5
 
 # Setup database tables and data
 echo "[i] Starting database migration script"
-npx sequelize-cli db:migrate --url "mysql:$MYSQL_USER:$MYSQL_USER_PWD@0.0.0.0:3306/$MYSQL_USER_DB"
+npx sequelize-cli db:migrate --url "mysql:$MYSQL_USER:$MYSQL_USER_PWD@localhost:3306/$MYSQL_USER_DB"
