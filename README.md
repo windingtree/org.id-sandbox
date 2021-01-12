@@ -11,40 +11,22 @@ Start developing your [ORG.ID](https://orgid.tech) applications in two easy-ish 
 ### 2. Run the testnet
 
 ```shell
-docker run -it windingtree/org.id-testnet -v orgid_volume:/org.id-testnet
+docker run -it windingtree/org.id-sandbox \
+    -v orgid_volume:/org.id-testnet-data \
+    -v mysql_volume:/var/lib/mysql \
+    -p 8545:8545 \
+    -p 8546:8546 \
+    -p 30303:30303 \
+    -p 3306:3306 \
+    -p 3333:3333 \
+    -p 4444:4444
 ```
 
-## Connect
-
-Hopefully, at this point you'll see a screen with all sorts of information about the testnet. Now you should are able to use the testnet via all the usual ways you would employ with your garden-variety local `go-ethereum` node. Don't worry, no need to [duckduckgo](https://duckduckgo.com/) it, we're good people, so we're going to lay it all out for you:
-
-### 1. JavaScript Console
-
-```shell
-$
-```
-
-### 2. Execute JavaScript files
-
-```shell
-$
-```
-
-### 3. JSON-RPC
-
-For this one you'll need to [install](https://geth.ethereum.org/docs/install-and-build/installing-geth) `go-ethereum` on your machine. See you in thirty minutes or so. Are you done? Come on, the testnet is not going connect to itself:
-
-```shell
-$
-```
-
-If you're feeling adventurous, you may do [other things, too](https://geth.ethereum.org/docs/interface/command-line-options). Go ahead, give it a spin, you've nothing to lose!
-
-## Use
-
-As you may have noticed, the testnet is [already populated](#whats-included) with test accounts, organizations, and such, so you can start doing things like:
+## Usage
 
 ### Reading organization data
+
+As you may have noticed, the testnet is [already populated](#whats-included) with test accounts, organizations, and such, so you can start doing things like:
 
 ```shell
 $
@@ -67,7 +49,8 @@ $
 By default, the testnet's state is stored in the "orgid_testnet_volume" Docker volume. Resetting it is duck soup:
 
 ```shell
-$
+docker volume rm orgid_volume
+docker volume rm mysql_volume
 ```
 
 ## What's Included
